@@ -31,7 +31,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 所有子模块API
 
-#### config.js
+#### vue.config.js
 
 axios默认配置，包含基础路径等信息
 
