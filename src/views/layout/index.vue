@@ -1,19 +1,19 @@
 <template>
-    <div class="wrapper" :class="{ closeBar: opened }">
-        <el-container>
-            <el-header>
-                <TopMenu />
-            </el-header>
-            <el-container>
-                <el-aside width="200px">
-                    <LeftMenu />
-                </el-aside>
-                <transition name="fade-page" mode="out-in">
-                    <router-view />
-                </transition>
-            </el-container>
-        </el-container>
-    </div>
+  <div class="wrapper" :class="{ closeBar: opened }">
+    <el-container>
+      <el-header>
+        <TopMenu />
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <LeftMenu />
+        </el-aside>
+        <transition name="fade-page" mode="out-in">
+          <router-view />
+        </transition>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
@@ -23,14 +23,14 @@ import TopMenu from '@/components/mainframe/TopMenu'
 import { mapGetters } from 'vuex'
 
 export default {
-    name: 'TEMPLATE',
-    components: {
-        LeftMenu,
-        TopMenu,
-    },
-    computed: {
-        ...mapGetters(['opened']),
-    },
+  name: 'TEMPLATE',
+  components: {
+    LeftMenu,
+    TopMenu
+  },
+  computed: {
+    ...mapGetters(['opened'])
+  }
 }
 </script>
 

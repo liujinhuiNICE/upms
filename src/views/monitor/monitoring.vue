@@ -6,9 +6,8 @@
           <h3>CPU</h3>
         </div>
         <el-table :data="cpuTableData" style="width: 100%">
-          <el-table-column prop="name" label="属性" width="280">
-          </el-table-column>
-          <el-table-column prop="value" label="值"> </el-table-column>
+          <el-table-column prop="name" label="属性" width="280" />
+          <el-table-column prop="value" label="值" />
         </el-table>
       </el-card>
       <el-card class="mem">
@@ -16,11 +15,9 @@
           <h3>内存</h3>
         </div>
         <el-table :data="memTableData" style="width: 100%">
-          <el-table-column prop="name" label="属性" width="180">
-          </el-table-column>
-          <el-table-column prop="sysMem" label="内存" width="180">
-          </el-table-column>
-          <el-table-column prop="jvmMem" label="JVM"> </el-table-column>
+          <el-table-column prop="name" label="属性" width="180" />
+          <el-table-column prop="sysMem" label="内存" width="180" />
+          <el-table-column prop="jvmMem" label="JVM" />
         </el-table>
       </el-card>
     </div>
@@ -30,12 +27,10 @@
           <h3>服务器信息</h3>
         </div>
         <el-table :data="sysTableData" style="width: 100%">
-          <el-table-column prop="name" label="服务器名称" width="180">
-          </el-table-column>
-          <el-table-column prop="ip" label="服务器IP" width="180">
-          </el-table-column>
-          <el-table-column prop="opSys" label="操作系统"> </el-table-column>
-          <el-table-column prop="cons" label="处理器架构"> </el-table-column>
+          <el-table-column prop="name" label="服务器名称" width="180" />
+          <el-table-column prop="ip" label="服务器IP" width="180" />
+          <el-table-column prop="opSys" label="操作系统" />
+          <el-table-column prop="cons" label="处理器架构" />
         </el-table>
       </el-card>
     </div>
@@ -45,14 +40,12 @@
           <h3>Java虚拟机信息</h3>
         </div>
         <el-table :data="jvmTableData" style="width: 100%">
-          <el-table-column prop="name" label="Java名称" width="280">
-          </el-table-column>
-          <el-table-column prop="startTime" label="启动时间" width="180">
-          </el-table-column>
-          <el-table-column prop="home" label="安装路径"> </el-table-column>
-          <el-table-column prop="userDir" label="	项目路径"> </el-table-column>
-          <el-table-column prop="version" label="		Java版本"> </el-table-column>
-          <el-table-column prop="runTime" label="		运行时长"> </el-table-column>
+          <el-table-column prop="name" label="Java名称" width="280" />
+          <el-table-column prop="startTime" label="启动时间" width="180" />
+          <el-table-column prop="home" label="安装路径" />
+          <el-table-column prop="userDir" label="	项目路径" />
+          <el-table-column prop="version" label="		Java版本" />
+          <el-table-column prop="runTime" label="		运行时长" />
         </el-table>
       </el-card>
     </div>
@@ -62,15 +55,13 @@
           <h3>磁盘状态</h3>
         </div>
         <el-table :data="sysFiles" style="width: 100%">
-          <el-table-column prop="dirName" label="盘符路径" width="180">
-          </el-table-column>
-          <el-table-column prop="sysTypeName" label="文件系统" width="180">
-          </el-table-column>
-          <el-table-column prop="typeName" label="盘符类型"> </el-table-column>
-          <el-table-column prop="total" label="	总大小"> </el-table-column>
-          <el-table-column prop="free" label="	可用大小"> </el-table-column>
-          <el-table-column prop="used" label="	已用大小"> </el-table-column>
-          <el-table-column prop="usage" label="	已用百分比"> </el-table-column>
+          <el-table-column prop="dirName" label="盘符路径" width="180" />
+          <el-table-column prop="sysTypeName" label="文件系统" width="180" />
+          <el-table-column prop="typeName" label="盘符类型" />
+          <el-table-column prop="total" label="	总大小" />
+          <el-table-column prop="free" label="	可用大小" />
+          <el-table-column prop="used" label="	已用大小" />
+          <el-table-column prop="usage" label="	已用百分比" />
         </el-table>
       </el-card>
     </div>
@@ -78,83 +69,87 @@
 </template>
 
 <script>
-import { querySysInfo } from "@/api/monitor";
+import { querySysInfo } from '@/api/monitor'
 export default {
-  name: "Monitoring",
+  name: 'Monitoring',
   data() {
     return {
       jvmData: {
         total: 916,
         max: null,
         free: null,
-        version: "",
-        home: "C:\\Program Files\\Java\\jdk1.8.0_111\\jre",
-        name: "Java HotSpot(TM) 64-Bit Server VM",
-        startTime: "2021-01-06 14:21:50",
+        version: '',
+        home: 'C:\\Program Files\\Java\\jdk1.8.0_111\\jre',
+        name: 'Java HotSpot(TM) 64-Bit Server VM',
+        startTime: '2021-01-06 14:21:50',
         used: 222.88,
         usage: 24.33,
-        runTime: "2分27秒427毫秒",
+        runTime: '2分27秒427毫秒'
       },
       sysFiles: [],
       memTableData: [],
       cpuTableData: [],
       sysTableData: [],
-      jvmTableData: [],
-    };
+      jvmTableData: []
+    }
+  },
+
+  mounted() {
+    this.getSysInfo()
   },
   methods: {
     getSysInfo() {
       querySysInfo().then((res) => {
-        this.sysFiles = res.data.sysFiles;
-        this.getMemTableData(res.data);
-        this.getCpuTableData(res.data);
-        this.getSysTableData(res.data);
-        this.getJvmTableData(res.data);
-      });
+        this.sysFiles = res.data.sysFiles
+        this.getMemTableData(res.data)
+        this.getCpuTableData(res.data)
+        this.getSysTableData(res.data)
+        this.getJvmTableData(res.data)
+      })
     },
     getMemTableData(data) {
       this.memTableData = [
         {
-          name: "总内存",
-          sysMem: data.mem.total + "GB",
-          jvmMem: data.jvm.total + "MB",
+          name: '总内存',
+          sysMem: data.mem.total + 'GB',
+          jvmMem: data.jvm.total + 'MB'
         },
         {
-          name: "已用内存",
-          sysMem: data.mem.used + "GB",
-          jvmMem: data.jvm.used + "MB",
+          name: '已用内存',
+          sysMem: data.mem.used + 'GB',
+          jvmMem: data.jvm.used + 'MB'
         },
         {
-          name: "剩余内存",
-          sysMem: data.mem.free + "GB",
-          jvmMem: data.jvm.free + "MB",
+          name: '剩余内存',
+          sysMem: data.mem.free + 'GB',
+          jvmMem: data.jvm.free + 'MB'
         },
         {
-          name: "使用率",
-          sysMem: data.mem.usage + "%",
-          jvmMem: data.jvm.usage + "%",
-        },
-      ];
+          name: '使用率',
+          sysMem: data.mem.usage + '%',
+          jvmMem: data.jvm.usage + '%'
+        }
+      ]
     },
     getCpuTableData(data) {
       this.cpuTableData = [
         {
-          name: "核心数",
-          value: data.cpu.cpuNum + "核",
+          name: '核心数',
+          value: data.cpu.cpuNum + '核'
         },
         {
-          name: "用户使用率",
-          value: data.cpu.used + "%",
+          name: '用户使用率',
+          value: data.cpu.used + '%'
         },
         {
-          name: "系统使用率",
-          value: data.cpu.sys + "%",
+          name: '系统使用率',
+          value: data.cpu.sys + '%'
         },
         {
-          name: "当前空闲率",
-          value: data.cpu.free + "%",
-        },
-      ];
+          name: '当前空闲率',
+          value: data.cpu.free + '%'
+        }
+      ]
     },
     getSysTableData(data) {
       this.sysTableData = [
@@ -162,9 +157,9 @@ export default {
           name: data.sys.computerName,
           ip: data.sys.computerIp,
           opSys: data.sys.osName,
-          cons: data.sys.osArch,
-        },
-      ];
+          cons: data.sys.osArch
+        }
+      ]
     },
     getJvmTableData(data) {
       this.jvmTableData = [
@@ -174,16 +169,12 @@ export default {
           home: data.jvm.home,
           userDir: data.sys.userDir,
           version: data.jvm.version,
-          runTime: data.jvm.runTime,
-        },
-      ];
-    },
-  },
-
-  mounted() {
-    this.getSysInfo();
-  },
-};
+          runTime: data.jvm.runTime
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">

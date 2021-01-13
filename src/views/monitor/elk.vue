@@ -1,12 +1,12 @@
 <template>
-    <div class="handle">
-        <h2>ELK</h2>
-    </div>
+  <div class="handle">
+    <h2>ELK</h2>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'ELK',
+  name: 'ELK'
 }
 </script>
 

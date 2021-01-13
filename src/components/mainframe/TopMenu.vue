@@ -29,7 +29,7 @@
           <el-menu-item>
             <el-dropdown trigger="click">
               <el-badge :value="total" type="warning">
-                <i class="el-icon-message-solid"></i>
+                <i class="el-icon-message-solid" />
               </el-badge>
               <el-dropdown-menu>
                 <el-dropdown-item>
@@ -99,16 +99,16 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" style="margin-top: 5px">
-          <el-button :size="size" @click.native="cgpwdVisible = false"
-            >取消</el-button
-          >
+          <el-button
+            :size="size"
+            @click.native="cgpwdVisible = false"
+          >取消</el-button>
           <el-button
             :size="size"
             type="primary"
             :loading="editLoading"
             @click="cgpwd"
-            >确定</el-button
-          >
+          >确定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -116,70 +116,73 @@
 </template>
 
 <script>
-import screenfull from "screenfull";
-import SideCollapse from "@/components/SideCollapse";
-import BreadCrumb from "@/components/BreadCrumb";
-import { mapGetters } from "vuex";
-import { changePsw, logout } from "@/api/user";
-import { getMyNotify } from "@/api/notify";
-import SockJS from "sockjs-client";
-import Stomp from "stompjs";
+import screenfull from 'screenfull'
+import SideCollapse from '@/components/SideCollapse'
+import BreadCrumb from '@/components/BreadCrumb'
+import { mapGetters } from 'vuex'
+import { changePsw, logout } from '@/api/user'
+import { getMyNotify } from '@/api/notify'
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 export default {
-  name: "TopMenu",
+  name: 'TopMenu',
   components: {
     SideCollapse,
-    BreadCrumb,
+    BreadCrumb
   },
   data() {
     const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入新密码"));
+      if (value === '') {
+        callback(new Error('请输入新密码'))
       } else if (value.length < 6) {
-        callback(new Error("新密码不少于6位数"));
+        callback(new Error('新密码不少于6位数'))
       } else {
-        if (this.dataForm.newpassword !== "") {
-          this.$refs.dataForm.validateField("newRepeatPassword");
+        if (this.dataForm.newpassword !== '') {
+          this.$refs.dataForm.validateField('newRepeatPassword')
         }
-        callback();
+        callback()
       }
-    };
+    }
     const validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入新密码"));
+      if (value === '') {
+        callback(new Error('请再次输入新密码'))
       } else if (value !== this.dataForm.newpassword) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error('两次输入密码不一致!'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
-      total: "",
-      rows: "",
-      size: "small",
+      total: '',
+      rows: '',
+      size: 'small',
       cgpwdVisible: false, // 修改界面是否显示
       editLoading: false, // 载入图标
-      systemName: "通用用户权限系统",
+      systemName: '通用用户权限系统',
       dataForm: {
-        oldpassword: "",
-        newpassword: "",
-        newRepeatPassword: "",
+        oldpassword: '',
+        newpassword: '',
+        newRepeatPassword: ''
       },
       // 设置属性
       dataFormRules: {
         oldpassword: [
-          { required: true, message: "请输入旧密码", trigger: "blur" },
+          { required: true, message: '请输入旧密码', trigger: 'blur' }
         ],
         newpassword: [
-          { required: true, validator: validatePass, trigger: "blur" },
+          { required: true, validator: validatePass, trigger: 'blur' }
         ],
         newRepeatPassword: [
-          { required: true, validator: validatePass2, trigger: "blur" },
-        ],
-      },
-    };
+          { required: true, validator: validatePass2, trigger: 'blur' }
+        ]
+      }
+    }
   },
   computed: {
-    ...mapGetters(["username", "userId"]),
+    ...mapGetters(['username', 'userId'])
+  },
+  mounted: function() {
+    this.notify()
   },
   methods: {
     /**
@@ -188,95 +191,92 @@ export default {
     viewNotifyRecord(id) {
       var index = layer.open({
         type: 2,
-        title: "通知公告查看",
+        title: '通知公告查看',
         maxmin: true,
         shadeClose: false,
-        area: ["800px", "520px"],
-        content: prefix + "/view/" + id, // iframe的url
-        success: function (layero, index) {
+        area: ['800px', '520px'],
+        content: prefix + '/view/' + id, // iframe的url
+        success: function(layero, index) {
           // 已发布后
-          var iframeWin = layero.find("iframe")[0];
-          formView(iframeWin.contentWindow.document);
+          var iframeWin = layero.find('iframe')[0]
+          formView(iframeWin.contentWindow.document)
         },
-        btn: ["取 消"],
-        cancel: function (index) {
-          return true;
-        },
-      });
-      layer.full(index);
+        btn: ['取 消'],
+        cancel: function(index) {
+          return true
+        }
+      })
+      layer.full(index)
     },
 
     notify() {
       getMyNotify().then((res) => {
-        console.log(res, "==============");
-        this.total = res.data.records.length;
-      });
+        console.log(res, '==============')
+        this.total = res.data.records.length
+      })
     },
     setCgpwdVisible(cgpwdVisible) {
-      this.cgpwdVisible = cgpwdVisible;
+      this.cgpwdVisible = cgpwdVisible
     },
     toggleFull() {
       if (!screenfull.isEnabled) {
         this.$message({
-          type: "warning",
-          message: "you browser can not work",
-        });
-        return false;
+          type: 'warning',
+          message: 'you browser can not work'
+        })
+        return false
       }
-      screenfull.toggle();
+      screenfull.toggle()
     },
     cgpwd() {
-      this.$refs.dataForm.validate(async (valid) => {
+      this.$refs.dataForm.validate(async(valid) => {
         if (valid) {
           const res = await changePsw({
             newPassword: this.dataForm.newpassword,
             rawPassword: this.dataForm.oldpassword,
-            userId: this.userId,
-          });
+            userId: this.userId
+          })
           if (res.success) {
-            this.$alert("修改密码成功！请重新登录", "提示", {
-              confirmButtonText: "确定",
+            this.$alert('修改密码成功！请重新登录', '提示', {
+              confirmButtonText: '确定',
               callback: () => {
-                this.$router.push({ path: "/login" });
-                this.cgpwdVisible = false;
-              },
-            });
+                this.$router.push({ path: '/login' })
+                this.cgpwdVisible = false
+              }
+            })
           }
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     resetPass() {
-      this.cgpwdVisible = true;
+      this.cgpwdVisible = true
     },
     async logout() {
-      const res = await logout();
+      const res = await logout()
       if (res.code === 200) {
-        this.$store.dispatch("user/delToken", "token");
-        this.$router.push({ path: "/login" });
+        this.$store.dispatch('user/delToken', 'token')
+        this.$router.push({ path: '/login' })
       }
     },
     connect() {
-      let socket = new SockJS("http://localhost:8890/queue");
-      this.stompClient = Stomp.over(socket);
-      this.stompClient.connect({ userId: this.userId }, this.onConnected);
+      const socket = new SockJS('http://localhost:8890/queue')
+      this.stompClient = Stomp.over(socket)
+      this.stompClient.connect({ userId: this.userId }, this.onConnected)
     },
     onConnected(frame) {
-      this.stompClient.subscribe("/user/notifications", this.callback);
+      this.stompClient.subscribe('/user/notifications', this.callback)
     },
     callback(msg) {
-      let body = JSON.parse(msg.body);
-      console.log(body, "===================");
-      this.message = body.message;
-      this.title = body.title;
-    },
-  },
-  mounted: function () {
-    this.notify();
-  },
-};
+      const body = JSON.parse(msg.body)
+      console.log(body, '===================')
+      this.message = body.message
+      this.title = body.title
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

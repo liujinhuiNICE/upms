@@ -1,17 +1,17 @@
 <template>
-    <div class="handle">
-        <my-markdown />
-    </div>
+  <div class="handle">
+    <my-markdown />
+  </div>
 </template>
 
 <script>
 import myMarkdown from '@/assets/backEnd.md'
 
 export default {
-    name: 'BackEnd',
-    components: {
-        myMarkdown,
-    },
+  name: 'BackEnd',
+  components: {
+    myMarkdown
+  }
 }
 </script>
 

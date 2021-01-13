@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import 'element-ui/lib/theme-chalk/index.css'
 import {
-    Button, Select, Container, Header, Aside, Main, Footer, Submenu, Dropdown, DropdownMenu, DropdownItem, MenuItem, Pagination, Dialog, Menu, Scrollbar, Breadcrumb, BreadcrumbItem, Message, Input,
-    InputNumber, Form, FormItem, Checkbox, CheckboxButton, CheckboxGroup, MessageBox, Tooltip, Table, TableColumn, Option, OptionGroup, Switch, Tree, Radio, RadioGroup, RadioButton, Popover, DatePicker,
-    TimeSelect,
-    TimePicker,
-    Badge,
-    Collapse,
-    CollapseItem,
-    Card,
-    Divider
+  Button, Select, Container, Header, Aside, Main, Footer, Submenu, Dropdown, DropdownMenu, DropdownItem, MenuItem, Pagination, Dialog, Menu, Scrollbar, Breadcrumb, BreadcrumbItem, Message, Input,
+  InputNumber, Form, FormItem, Checkbox, CheckboxButton, CheckboxGroup, MessageBox, Tooltip, Table, TableColumn, Option, OptionGroup, Switch, Tree, Radio, RadioGroup, RadioButton, Popover, DatePicker,
+  TimeSelect,
+  TimePicker,
+  Badge,
+  Collapse,
+  CollapseItem,
+  Card,
+  Divider
 } from 'element-ui'
 Vue.use(Divider)
 Vue.use(Card)
